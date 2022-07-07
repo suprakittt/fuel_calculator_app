@@ -9,7 +9,8 @@ import 'package:driving_app/third_screen.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
 class CalculateWidget extends StatefulWidget {
-  const CalculateWidget({Key? key}) : super(key: key);
+  final double totol;
+  CalculateWidget({required this.totol});
 
   @override
   _CalculateWidgetState createState() => _CalculateWidgetState();
@@ -36,8 +37,7 @@ class _CalculateWidgetState extends State<CalculateWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '10,555',
-
+                      "${widget.totol}",
                     ),
                   ],
                 ),
@@ -52,28 +52,29 @@ class _CalculateWidgetState extends State<CalculateWidget> {
                 ),
               ),
               Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-              child: Container(
-                height: 200,
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: AlignmentDirectional(0.02, -0.21),
-                      child: RaisedButton(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                child: Container(
+                  height: 200,
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(0.02, -0.21),
+                        child: RaisedButton(
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => HomeScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()),
                             );
                           },
-                        color: Colors.blue,
-                        child: Text('Go Home!'),
+                          color: Colors.blue,
+                          child: Text('Go Home!'),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
             ],
           ),
         ),

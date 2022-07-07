@@ -25,92 +25,93 @@ class CalculationWidget extends StatefulWidget {
 class _CalculationWidgetState extends State<CalculationWidget>
     with TickerProviderStateMixin {
   late String dropDownValue;
-  TextEditingController? textController;
+  TextEditingController textController = TextEditingController();
+  double rain = 0.00;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final List<String> items = <String>[
-  "นครราชสีมา",
-  "เชียงใหม่",
-  "กาญจนบุรี",
-  "ตาก",
-  "อุบลราชธานี",
-  "สุราษฎร์ธานี",
-  "ชัยภูมิ",
-  "แม่ฮ่องสอน",
-  "เพชรบูรณ์",
-  "ลำปาง",
-  "อุดรธานี",
-  "เชียงราย",
-  "น่าน",
-  "เลย",
-  "ขอนแก่น",
-  "พิษณุโลก",
-  "บุรีรัมย์",
-  "นครศรีธรรมราช",
-  "สกลนคร",
-  "นครสวรรค์",
-  "ศรีสะเกษ",
-  "กำแพงเพชร",
-  "ร้อยเอ็ด",
-  "สุรินทร์",
-  "อุตรดิตถ์",
-  "สงขลา",
-  "สระแก้ว",
-  "กาฬสินธุ์",
-  "อุทัยธานี",
-  "สุโขทัย",
-  "แพร่",
-  "ประจวบคีรีขันธ์",
-  "จันทบุรี",
-  "พะเยา",
-  "เพชรบุรี",
-  "ลพบุรี",
-  "ชุมพร",
-  "นครพนม",
-  "สุพรรณบุรี",
-  "ฉะเชิงเทรา",
-  "มหาสารคาม",
-  "ราชบุรี",
-  "ตรัง",
-  "ปราจีนบุรี",
-  "กระบี่",
-  "พิจิตร",
-  "ยะลา",
-  "ลำพูน",
-  "นราธิวาส",
-  "ชลบุรี",
-  "มุกดาหาร",
-  "บึงกาฬ",
-  "พังงา",
-  "ยโสธร",
-  "หนองบัวลำภู",
-  "สระบุรี",
-  "ระยอง",
-  "พัทลุง",
-  "ระนอง",
-  "อำนาจเจริญ",
-  "หนองคาย",
-  "ตราด",
-  "พระนครศรีอยุธยา",
-  "สตูล",
-  "ชัยนาท",
-  "นครปฐม",
-  "นครนายก",
-  "ปัตตานี",
-  "กรุงเทพมหานคร",
-  "ปทุมธานี",
-  "สมุทรปราการ",
-  "อ่างทอง",
-  "สมุทรสาคร",
-  "สิงห์บุรี",
-  "นนทบุรี",
-  "ภูเก็ต",
-  "สมุทรสงคราม"
+    "นครราชสีมา",
+    "เชียงใหม่",
+    "กาญจนบุรี",
+    "ตาก",
+    "อุบลราชธานี",
+    "สุราษฎร์ธานี",
+    "ชัยภูมิ",
+    "แม่ฮ่องสอน",
+    "เพชรบูรณ์",
+    "ลำปาง",
+    "อุดรธานี",
+    "เชียงราย",
+    "น่าน",
+    "เลย",
+    "ขอนแก่น",
+    "พิษณุโลก",
+    "บุรีรัมย์",
+    "นครศรีธรรมราช",
+    "สกลนคร",
+    "นครสวรรค์",
+    "ศรีสะเกษ",
+    "กำแพงเพชร",
+    "ร้อยเอ็ด",
+    "สุรินทร์",
+    "อุตรดิตถ์",
+    "สงขลา",
+    "สระแก้ว",
+    "กาฬสินธุ์",
+    "อุทัยธานี",
+    "สุโขทัย",
+    "แพร่",
+    "ประจวบคีรีขันธ์",
+    "จันทบุรี",
+    "พะเยา",
+    "เพชรบุรี",
+    "ลพบุรี",
+    "ชุมพร",
+    "นครพนม",
+    "สุพรรณบุรี",
+    "ฉะเชิงเทรา",
+    "มหาสารคาม",
+    "ราชบุรี",
+    "ตรัง",
+    "ปราจีนบุรี",
+    "กระบี่",
+    "พิจิตร",
+    "ยะลา",
+    "ลำพูน",
+    "นราธิวาส",
+    "ชลบุรี",
+    "มุกดาหาร",
+    "บึงกาฬ",
+    "พังงา",
+    "ยโสธร",
+    "หนองบัวลำภู",
+    "สระบุรี",
+    "ระยอง",
+    "พัทลุง",
+    "ระนอง",
+    "อำนาจเจริญ",
+    "หนองคาย",
+    "ตราด",
+    "พระนครศรีอยุธยา",
+    "สตูล",
+    "ชัยนาท",
+    "นครปฐม",
+    "นครนายก",
+    "ปัตตานี",
+    "กรุงเทพมหานคร",
+    "ปทุมธานี",
+    "สมุทรปราการ",
+    "อ่างทอง",
+    "สมุทรสาคร",
+    "สิงห์บุรี",
+    "นนทบุรี",
+    "ภูเก็ต",
+    "สมุทรสงคราม"
   ];
   String? selectedValue;
   String fuel = " ";
   var data = {};
-  var weatherData; //ข้อมูล อากาศ
+  List weatherData = []; //ข้อมูล อากาศ
   var gasData; //ข้อมูล น้ำมัน
 
   getData() async {
@@ -197,7 +198,15 @@ class _CalculationWidgetState extends State<CalculationWidget>
                       value: selectedValue,
                       onChanged: (value) {
                         setState(() {
+                          bool set = true;
                           selectedValue = value as String;
+                          weatherData.forEach((e) {
+                            if (e["Province"] == selectedValue && set) {
+                              print(e["Observation"]["Rainfall"]);
+                              rain = double.parse(e["Observation"]["Rainfall"]);
+                              set = false;
+                            }
+                          });
                         });
                       },
                     ),
@@ -301,12 +310,27 @@ class _CalculationWidgetState extends State<CalculationWidget>
                       alignment: AlignmentDirectional(0.02, -0.21),
                       child: RaisedButton(
                           onPressed: () {
+                            double money = 0.00;
+                            double range = double.parse(textController.text);
+                            double km_L = double.parse("${data["fuel"]}");
+                            double price = double.parse(fuel);
+                            money = (range / km_L) * price;
+                            if (rain < 0.5) {
+                              money = money + ((money * 5) / 100);
+                            } else if (rain < 4) {
+                              money = money + ((money * 8) / 100);
+                            } else if (rain < 8) {
+                              money = money + ((money * 12) / 100);
+                            } else {
+                              money = money + ((money * 15) / 100);
+                            }
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => CalculateWidget(
-                                        key: null,
-                                      )),
+                                builder: (context) => CalculateWidget(
+                                  totol: money,
+                                ),
+                              ),
                             );
                           },
                           color: Colors.blue,
