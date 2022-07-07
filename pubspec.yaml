@@ -29,6 +29,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  http: ^0.13.4
+  xml2json: ^5.3.3
+  get_storage: ^2.0.3
 
 
 

@@ -28,6 +28,7 @@
 // import '../flutter_flow/flutter_flow_widgets.dart';
 // import '../profile/profile_widget.dart';
 import 'package:driving_app/constants.dart';
+import 'package:driving_app/function.dart';
 import 'package:driving_app/homepage.dart';
 /*import 'package:constants.dart';
 import 'package:homepage.dart';*/
@@ -41,18 +42,26 @@ class SecondScreen extends StatefulWidget {
 }
 
 class _SecondScreenWidgetState extends State<SecondScreen> {
-  String dropDownValue = 'e20';
-  // TextEditingController emailAddressController1;
-  // TextEditingController emailAddressController2;
+  String dropDownValue = 'Gasohol 91 S EVO';
+  TextEditingController emailAddressController1 = TextEditingController();
+  TextEditingController emailAddressController2 = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var items = ['e20', 'Gasohol 95', 'Gasohol 91', 'e85', 'Diesel'];
-
+  var items = [
+    'Hi Premium Diesel S B7',
+    'Diesel S B7',
+    'HI DIESEL S',
+    'HI DIESEL B20 S',
+    'Gasohol E85 S EVO',
+    'Gasohol E20 S EVO',
+    'Gasohol 91 S EVO',
+    'Gasohol 95 S EVO',
+  ];
+  List profile = [];
   @override
   void initState() {
     super.initState();
-    // emailAddressController1 = TextEditingController();
-    // emailAddressController2 = TextEditingController();
+    profile = Rom.get();
   }
 
   @override
@@ -156,7 +165,7 @@ class _SecondScreenWidgetState extends State<SecondScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: TextFormField(
-                  // controller: emailAddressController1,
+                  controller: emailAddressController1,
                   obscureText: false,
                   decoration: InputDecoration(
                     labelText: 'Car model',
@@ -214,7 +223,7 @@ class _SecondScreenWidgetState extends State<SecondScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: TextFormField(
-                // controller: emailAddressController2,
+                controller: emailAddressController2,
                 obscureText: false,
                 decoration: InputDecoration(
                   labelText: 'Fuel Economy',
@@ -281,9 +290,8 @@ class _SecondScreenWidgetState extends State<SecondScreen> {
                     child: DropdownButtonFormField(
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                              const Radius.circular(10)
-                          ),
+                          borderRadius:
+                              const BorderRadius.all(const Radius.circular(10)),
                           borderSide: BorderSide(width: 0.1),
                         ),
                         filled: true,
@@ -299,9 +307,13 @@ class _SecondScreenWidgetState extends State<SecondScreen> {
                       items: items.map((String items) {
                         return DropdownMenuItem(
                           value: items,
-                          child: Text(items, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: kButtonColor),
+                          child: Text(
+                            items,
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: kButtonColor),
                           ),
-
                         );
                       }).toList(),
                       onChanged: (String? newValue) {
@@ -376,13 +388,14 @@ class _SecondScreenWidgetState extends State<SecondScreen> {
                       primary: Colors.white,
                       textStyle: const TextStyle(fontSize: 20),
                     ),
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomeScreen(),
-                        ),
-                      );
+                    onPressed: () {
+                      profile.add({
+                        "name": emailAddressController1.text,
+                        "fuel": emailAddressController2.text,
+                        "item": items.indexOf(dropDownValue),
+                      });
+                      Rom.set(profile);
+                      Navigator.pop(context);
                     },
                     child: const Text('Create Account'),
                   ),

@@ -3,13 +3,15 @@ import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';*/
 import 'package:driving_app/constants.dart';
+import 'package:driving_app/function.dart';
 import 'package:flutter/material.dart';
 import 'fouth_screen.dart';
 import 'package:flutter/services.dart';
 /*import 'package:google_fonts/google_fonts.dart';*/
 
 class CalculationWidget extends StatefulWidget {
-  const CalculationWidget({Key? key,String? title}) : super(key: key);
+  final int index;
+  CalculationWidget({required this.index});
 
   @override
   _CalculationWidgetState createState() => _CalculationWidgetState();
@@ -19,7 +21,6 @@ class CalculationWidget extends StatefulWidget {
   String loadedString = await rootBundle.loadString('proviences.txt');
   List<String> items = loadedString.split('\n');
 }*/
-
 
 class _CalculationWidgetState extends State<CalculationWidget>
     with TickerProviderStateMixin {
@@ -33,11 +34,35 @@ class _CalculationWidgetState extends State<CalculationWidget>
     "นครปฐม",
   ];
   String? selectedValue;
+  String fuel = " ";
+  var data = {};
+  var weatherData; //ข้อมูล อากาศ
+  var gasData; //ข้อมูล น้ำมัน
 
+  getData() async {
+    data = Rom.get()[widget.index];
+    weatherData = await getWeatherData();
+    gasData = await getGasData();
+    print(weatherData);
+    print("");
+    print(gasData);
+    fuel = gasData[(data["item"])]["today"];
+    print("");
+    print("---------------ตัวอย่างการใช้-----------------------");
+    print(weatherData[0]["Province"]);
+    print("");
+    print(gasData[0]["today"]);
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       key: scaffoldKey,
       body: SingleChildScrollView(
@@ -63,7 +88,7 @@ class _CalculationWidgetState extends State<CalculationWidget>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Car Model',
+                    '${data["name"]}',
                     style: TextStyle(fontSize: 25),
                   ),
                 ],
@@ -85,19 +110,15 @@ class _CalculationWidgetState extends State<CalculationWidget>
                         'Select Destination Province',
                         style: TextStyle(
                           fontSize: 14,
-                          color: Theme
-                              .of(context)
-                              .hintColor,
+                          color: Theme.of(context).hintColor,
                         ),
                       ),
                       items: items
-                          .map((item) =>
-                          DropdownMenuItem<String>(
-                            value: item,
-                            child: Center(
-                              child: Text(item),
-                            )
-                          ))
+                          .map((item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Center(
+                                child: Text(item),
+                              )))
                           .toList(),
                       value: selectedValue,
                       onChanged: (value) {
@@ -174,7 +195,7 @@ class _CalculationWidgetState extends State<CalculationWidget>
                         ),
                       ),
                       Text(
-                        '1.2',
+                        '${data["fuel"]}',
                       ),
                     ],
                   ),
@@ -189,7 +210,7 @@ class _CalculationWidgetState extends State<CalculationWidget>
                         ),
                       ),
                       Text(
-                        '44',
+                        fuel,
                       ),
                     ],
                   ),
@@ -204,17 +225,18 @@ class _CalculationWidgetState extends State<CalculationWidget>
                   children: [
                     Align(
                       alignment: AlignmentDirectional(0.02, -0.21),
-
                       child: RaisedButton(
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => CalculateWidget(key: null,)),
+                              MaterialPageRoute(
+                                  builder: (context) => CalculateWidget(
+                                        key: null,
+                                      )),
                             );
                           },
                           color: Colors.blue,
-                        child: Text('Calculate')
-                      ),
+                          child: Text('Calculate')),
                     ),
                   ],
                 ),
