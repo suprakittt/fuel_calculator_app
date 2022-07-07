@@ -1,4 +1,4 @@
-# driving_app
+# Calculating fuel price application
 
 A new Flutter project.
 
