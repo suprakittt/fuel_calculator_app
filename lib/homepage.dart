@@ -83,17 +83,40 @@ class _HomeScreenWidget extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
               child: ListView.builder(
-                padding: EdgeInsets.zero,
-                primary: false,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: profile.length,
-                itemBuilder: (context, inndex) => items(
-                  name: profile[inndex]["name"],
-                  fuel: profile[inndex]["fuel"],
-                  index: inndex,
-                ),
-              ),
+                  padding: EdgeInsets.zero,
+                  primary: false,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: profile.length,
+                  itemBuilder: (context, index) {
+                    final item = profile[index];
+                    return Dismissible(
+                      key: Key(item["name"]),
+                      direction: DismissDirection.endToStart,
+                      background: Container(
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.symmetric(horizontal: 17),
+                        color: Colors.red,
+                        child: const Text(
+                          "Delete",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      onDismissed: (direction) {
+                        profile.removeAt(index);
+                        Rom.set(profile);
+                      },
+                      child: items(
+                        name: profile[index]["name"],
+                        fuel: profile[index]["fuel"],
+                        index: index,
+                      ),
+                    );
+                  }),
             ),
           ],
         ),

@@ -1,15 +1,11 @@
-/*import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../profile/profile_widget.dart';*/
 import 'package:driving_app/homepage.dart';
-import 'package:driving_app/third_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:driving_app/third_screen.dart';
-//import 'package:google_fonts/google_fonts.dart';
+
+
 
 class CalculateWidget extends StatefulWidget {
-  const CalculateWidget({Key? key}) : super(key: key);
+  final double totol;
+  CalculateWidget({required this.totol});
 
   @override
   _CalculateWidgetState createState() => _CalculateWidgetState();
@@ -36,14 +32,15 @@ class _CalculateWidgetState extends State<CalculateWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '10,555',
-
+                      "${widget.totol}",
+                      style: TextStyle(fontSize: 80),
                     ),
                   ],
                 ),
               ),
               Text(
                 'THB',
+                  style: TextStyle(fontSize: 50),
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
@@ -52,28 +49,65 @@ class _CalculateWidgetState extends State<CalculateWidget> {
                 ),
               ),
               Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-              child: Container(
-                height: 200,
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: AlignmentDirectional(0.02, -0.21),
-                      child: RaisedButton(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                child: Container(
+                  height: 200,
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(0.02, -0.21),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: Stack(
+                            children: <Widget>[
+                              Positioned.fill(
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: <Color>[
+                                        Color(0xFF0D47A1),
+                                        Color(0xFF1976D2),
+                                        Color(0xFF42A5F5),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.all(16.0),
+                                  primary: Colors.white,
+                                  textStyle: const TextStyle(fontSize: 20),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()),
+                                  );
+                                },
+                                child: const Text('Back To HomePage'),
+                              ),
+                            ],
+                          ),
+                        ),
+
+/*                        child: RaisedButton(
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => HomeScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()),
                             );
                           },
-                        color: Colors.blue,
-                        child: Text('Go Home!'),
+                          color: Colors.blue,
+                          child: Text('Go Home!'),
+                        ),*/
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
             ],
           ),
         ),
