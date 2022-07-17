@@ -14,4 +14,5 @@ const kShadow = Color(0x3A000000);
 const kAdd = Color(0xFF39D2C0);
 const kRed = Color.fromARGB(255, 210, 95, 57);
 const kBox = Color(0xFFFAF9F9);
+const fuelPrice = Color(0xFFC0BFC9);
 // const kBlue = Color(0xFF)

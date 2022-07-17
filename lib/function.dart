@@ -51,4 +51,5 @@ class Rom {
   static get() {
     return box.read('profile') ?? [];
   }
+  // static save(var data) =>box.write('gas price', data);
 }
