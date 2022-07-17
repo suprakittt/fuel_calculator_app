@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     print("$email is in.");
                     Navigator.pushReplacement(
     context, MaterialPageRoute(builder: (context) => WelcomeWidget()));
-                    
+
                   } else{
                     print("Login failed");
                   }
