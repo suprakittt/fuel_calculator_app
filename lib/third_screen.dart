@@ -119,7 +119,7 @@ class _CalculationWidgetState extends State<CalculationWidget>
         child: Card(
           elevation: 20,
           margin: EdgeInsets.all(5),
-          color: Colors.black38,
+          color: Colors.black26,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
@@ -158,13 +158,28 @@ class _CalculationWidgetState extends State<CalculationWidget>
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       // crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 7),
-                          child: Text(
-                            'Weather (3 hours)',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
-                          ),
+
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(90, 0, 0, 7),
+                              child: Text(
+                                'Weather (3 hours)',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(30, 0, 0, 10),
+                              child: IconButton(
+                                icon: Icon(Icons.refresh),
+                                color: Color(0xFF57636C),
+                                onPressed: () async {
+                                  weatherData = await getWeatherData();
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -245,66 +260,11 @@ class _CalculationWidgetState extends State<CalculationWidget>
                                         EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
                                     child: Column(
                                       children: [
-                                        weatherLogo(1),
+                                        weatherLogo(14),
                                         // Text("กรุงเทพฯ"),
                                         Flexible(
                                             child: new Text(
-                                                "${weatherData[1]["Province"]}"))
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                elevation: 1,
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    color: Theme.of(context).colorScheme.outline,
-                                  ),
-                                  borderRadius:
-                                      const BorderRadius.all(Radius.circular(12)),
-                                ),
-                                color: kBrightCardColor,
-                                child: SizedBox(
-                                  width: 90,
-                                  height: 100,
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
-                                    child: Column(
-                                      children: [
-                                        weatherLogo(7),
-                                        Flexible(
-                                            child: new Text(
-                                                "${weatherData[7]["Province"]}"))
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                elevation: 1,
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    color: Theme.of(context).colorScheme.outline,
-                                  ),
-                                  borderRadius:
-                                      const BorderRadius.all(Radius.circular(12)),
-                                ),
-                                color: kBrightCardColor,
-                                child: SizedBox(
-                                  width: 90,
-                                  height: 100,
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
-                                    child: Column(
-                                      children: [
-                                        weatherLogo(33),
-                                        // Text("อยุธยา"),
-                                        Flexible(
-                                            child: new Text(
-                                                "${weatherData[33]["Province"]}"))
+                                                "${weatherData[14]["Province"]}"))
                                       ],
                                     ),
                                   ),
@@ -337,17 +297,61 @@ class _CalculationWidgetState extends State<CalculationWidget>
                                   ),
                                 ),
                               ),
-                              // Column(
-                              //   children: [
-                              //     weatherLogo(8),
-                              //     Text("${weatherData[8]["Province"]}"),
-                              // Text("${weatherData[8]["Province"]} "+"Rainfall = "+"${weatherData[8]["Observation"]["Rainfall"]}"),
-                              // Text("${weatherData[61]["Province"]} "+"Rainfall = "+"${weatherData[61]["Observation"]["Rainfall"]}"),
-                              // Text("${weatherData[56]["Province"]} "+"Rainfall = "+"${weatherData[56]["Observation"]["Rainfall"]}"),
-                              // Text("${weatherData[80]["Province"]} "+"Rainfall = "+"${weatherData[80]["Observation"]["Rainfall"]}"),
-                              // Text("${weatherData[79]["Province"]} "+"Rainfall = "+"${weatherData[79]["Observation"]["Rainfall"]}"),
-                              //   ],
-                              // ),
+                              Card(
+                                elevation: 1,
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                    color: Theme.of(context).colorScheme.outline,
+                                  ),
+                                  borderRadius:
+                                      const BorderRadius.all(Radius.circular(12)),
+                                ),
+                                color: kBrightCardColor,
+                                child: SizedBox(
+                                  width: 90,
+                                  height: 100,
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
+                                    child: Column(
+                                      children: [
+                                        weatherLogo(26),
+                                        // Text("อยุธยา"),
+                                        Flexible(
+                                            child: new Text(
+                                                "${weatherData[26]["Province"]}"))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Card(
+                                elevation: 1,
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                    color: Theme.of(context).colorScheme.outline,
+                                  ),
+                                  borderRadius:
+                                      const BorderRadius.all(Radius.circular(12)),
+                                ),
+                                color: kBrightCardColor,
+                                child: SizedBox(
+                                  width: 90,
+                                  height: 100,
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
+                                    child: Column(
+                                      children: [
+                                        weatherLogo(32),
+                                        Flexible(
+                                            child: new Text(
+                                                "${weatherData[32]["Province"]}"))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -361,6 +365,12 @@ class _CalculationWidgetState extends State<CalculationWidget>
                 StreamBuilder(
                   stream: _car.snapshots(),
                   builder: ((context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                    if( streamSnapshot.connectionState == ConnectionState.waiting){
+                      return Center(child: CircularProgressIndicator());
+                    } else if( streamSnapshot.hasError){
+                      return Center(child: Text('Something went wrong!'));
+                    }
+                    else
                     if (streamSnapshot.hasData) {
                       return Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
@@ -403,7 +413,7 @@ class _CalculationWidgetState extends State<CalculationWidget>
               padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
               child: Text(
                 "Profile: "+ name ,
-                style: TextStyle(fontSize: 30, color: Colors.black,fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 30, color: Colors.white,fontWeight: FontWeight.bold),
               ),
             ),
           ],
@@ -505,18 +515,17 @@ class _CalculationWidgetState extends State<CalculationWidget>
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 colors: <Color>[
-                                  Color(0xFF0D47A1),
-                                  Color(0xFF1976D2),
-                                  Color(0xFF42A5F5),
+                                  kDarkCardColor,
+                                  kDarkCardColor,
                                 ],
                               ),
                             ),
                           ),
                         ),
-                        ElevatedButton(
+                        TextButton(
                           style: TextButton.styleFrom(
                             padding: const EdgeInsets.all(16.0),
-                            primary: Colors.white,
+                            primary: Colors.black,
                             textStyle: const TextStyle(fontSize: 20),
                           ),
                           onPressed: () {

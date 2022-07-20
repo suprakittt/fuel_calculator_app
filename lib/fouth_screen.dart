@@ -108,13 +108,13 @@ class _CalculateWidgetState extends State<CalculateWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     child: Text(
                       'Your Total Spent',
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w900,
-                        color: kExtra3Color,
+                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -126,7 +126,8 @@ class _CalculateWidgetState extends State<CalculateWidget> {
                       children: [
                         Text(
                           "${widget.totol.toStringAsFixed(2)}",
-                          style: TextStyle(fontSize: 70),
+                          style: TextStyle(fontSize: 70,color: Colors.white,),
+
                         ),
 
                       ],
@@ -134,7 +135,7 @@ class _CalculateWidgetState extends State<CalculateWidget> {
                   ),
                   Text(
                     'THB',
-                      style: TextStyle(fontSize: 50),
+                      style: TextStyle(fontSize: 50,color: Colors.white),
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
@@ -160,15 +161,14 @@ class _CalculateWidgetState extends State<CalculateWidget> {
                                       decoration: const BoxDecoration(
                                         gradient: LinearGradient(
                                           colors: <Color>[
-                                            Color(0xFF0D47A1),
-                                            Color(0xFF1976D2),
-                                            Color(0xFF42A5F5),
+                                            kDarkCardColor,
+                                            kDarkCardColor,
                                           ],
                                         ),
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
+                                  TextButton(
                                     style: TextButton.styleFrom(
                                       padding: const EdgeInsets.all(16.0),
                                       primary: Colors.white,

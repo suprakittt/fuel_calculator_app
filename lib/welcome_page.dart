@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driving_app/constants.dart';
 import 'package:driving_app/function.dart';
 import 'package:driving_app/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:driving_app/map/globals.dart';
+import 'package:location/location.dart';
 
 class WelcomeWidget extends StatefulWidget {
   const WelcomeWidget({Key? key}) : super(key: key);
@@ -15,7 +17,30 @@ class WelcomeWidget extends StatefulWidget {
 class _WelcomeWidgetState extends State<WelcomeWidget> {
   late PageController pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  late LocationData _currentPosition;
 
+  getLoc() async{
+    Location location = new Location();
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+    _currentPosition = await location.getLocation();
+  }
 
   getData() async {
     weatherData = await getWeatherData();
@@ -35,12 +60,14 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
   void initState() {
     super.initState();
     // getData();
+    getLoc();
   }
 
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
+
       key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: kBackgroundColor,
@@ -157,17 +184,16 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 colors: <Color>[
-                                  kExtra3Color,
-                                  kExtra3Color,
+                                  kDarkCardColor,
+                                  kDarkCardColor,
                                 ],
                               ),
                             ),
                           ),
                         ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
+                        TextButton(
+                          style: TextButton.styleFrom(
                             padding: const EdgeInsets.all(16.0),
-                            primary: Colors.blue,
                             textStyle: const TextStyle(fontSize: 20),
                           ),
                           onPressed: () async {

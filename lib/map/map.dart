@@ -1,3 +1,5 @@
+import 'package:driving_app/constants.dart';
+import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:driving_app/map/globals.dart';
 import 'package:driving_app/map/secrets.dart';
@@ -8,19 +10,37 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:driving_app/constants.dart';
 import 'package:driving_app/third_screen.dart';
+import 'globals.dart';
 
-class MapView extends StatefulWidget {
-  // final int index;
-  // MapView({required this.index});
+
+class mapScreen extends StatefulWidget {
+  const mapScreen({Key? key}) : super(key: key);
 
   @override
-  _MapViewState createState() => _MapViewState();
+  State<mapScreen> createState() => _mapScreenState();
 }
 
-class _MapViewState extends State<MapView> {
-
+class _mapScreenState extends State<mapScreen> {
+  // @override
+  // Widget build(BuildContext context) {
+  //   backgroundColor: kExtra1Color;
+  //   return Container(
+  //     child: Center(
+  //       child: TextButton(
+  //         child: Text('Test'),
+  //         onPressed: () async{
+  //           print("hello");
+  //         },
+  //         style: TextButton.styleFrom(
+  //           primary: kDarkCardColor,
+  //           backgroundColor: kBrightCardColor
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
   CameraPosition _initialLocation =
-      CameraPosition(target: LatLng(13.7563, 100.5018));
+  CameraPosition(target: LatLng(13.7563, 100.5018));
   // CameraPosition _initialLocation = CameraPosition(target: LatLng(0, 0));
   late GoogleMapController mapController;
 
@@ -64,7 +84,7 @@ class _MapViewState extends State<MapView> {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: true,
+          automaticallyImplyLeading: false,
           flexibleSpace: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -196,7 +216,7 @@ class _MapViewState extends State<MapView> {
                   padding: const EdgeInsets.only(top: 0.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white70,
+                      color: Colors.black54,
                       borderRadius: BorderRadius.all(
                         Radius.circular(20.0),
                       ),
@@ -209,13 +229,13 @@ class _MapViewState extends State<MapView> {
                         children: <Widget>[
                           Text(
                             'Places',
-                            style: TextStyle(fontSize: 20.0),
+                            style: TextStyle(fontSize: 20.0, color: Colors.white, fontWeight: FontWeight. bold),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(6.0),
                             child: Text(
                               'Display: Route and Distance',
-                              style: TextStyle(fontSize: 14.0),
+                              style: TextStyle(fontSize: 14.0,color: Colors.white,),
                             ),
                           ),
                           SizedBox(height: 10),
@@ -259,11 +279,15 @@ class _MapViewState extends State<MapView> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
                             ),
                           ),
                           SizedBox(height: 5),
                           ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(kDarkCardColor),
+                            ),
                             onPressed: (_startAddress != '' &&
                                 _destinationAddress != '')
                                 ? () async {
@@ -285,6 +309,7 @@ class _MapViewState extends State<MapView> {
                                     SnackBar(
                                       content: Text(
                                           'Distance Calculated Sucessfully'),
+                                      backgroundColor: Colors.green,
                                     ),
                                   );
                                 } else {
@@ -308,7 +333,7 @@ class _MapViewState extends State<MapView> {
                               child: Text(
                                 'Show Route'.toUpperCase(),
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 20.0,
                                 ),
                               ),
@@ -329,7 +354,7 @@ class _MapViewState extends State<MapView> {
                   padding: const EdgeInsets.only(right: 10.0, bottom: 10.0),
                   child: ClipOval(
                     child: Material(
-                      color: Colors.orange.shade100, // button color
+                      color: Colors.blue, // button color
                       child: InkWell(
                         splashColor: Colors.orange, // inkwell color
                         child: SizedBox(
@@ -443,7 +468,7 @@ class _MapViewState extends State<MapView> {
 
       setState(() {
         _currentAddress =
-            "${place.name}, ${place.locality}, ${place.postalCode}, ${place.country}";
+        "${place.name}, ${place.locality}, ${place.postalCode}, ${place.country}";
         startAddressController.text = _currentAddress;
         _startAddress = _currentAddress;
       });
@@ -458,7 +483,7 @@ class _MapViewState extends State<MapView> {
       // Retrieving placemarks from addresses
       List<Location>? startPlacemark = await locationFromAddress(_startAddress);
       List<Location>? destinationPlacemark =
-          await locationFromAddress(_destinationAddress);
+      await locationFromAddress(_destinationAddress);
 
       // Use the retrieved coordinates of the current position,
       // instead of the address if the start position is user's
@@ -571,7 +596,7 @@ class _MapViewState extends State<MapView> {
 
       setState(() {
         _placeDistance = totalDistance.toStringAsFixed(2);
-        print('DISTANCE: $_placeDistance km');
+        print('DISTANCE: $_placeDistance km',);
       });
 
       return true;
@@ -594,11 +619,11 @@ class _MapViewState extends State<MapView> {
 
   // Create the polylines for showing the route between two places
   _createPolylines(
-    double startLatitude,
-    double startLongitude,
-    double destinationLatitude,
-    double destinationLongitude,
-  ) async {
+      double startLatitude,
+      double startLongitude,
+      double destinationLatitude,
+      double destinationLongitude,
+      ) async {
     polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       Secrets.API_KEY, // Google Maps API Key

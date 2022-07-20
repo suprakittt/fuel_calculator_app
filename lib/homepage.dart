@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:driving_app/function.dart';
-import 'package:driving_app/map.dart';
+import 'package:driving_app/map/map.dart';
 import 'package:driving_app/third_screen.dart';
 import 'package:driving_app/welcome_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,19 +32,17 @@ class _HomeScreenWidget extends State<HomeScreen> {
       .collection('profile');
 
   getData() async {
-    // weatherData = await getWeatherData();
-    // gasData = await getGasData();
-    // print(weatherData);
-    // print("");
-    // print(gasData);
-    // fuel = gasData[(data["item"])]["today"];
-    // print("");
-    // print("---------------TEST-----------------------");
-    // print(weatherData[0]["Province"]);
-    // print("");
-    // print(gasData[0]["today"]);
-    // print("test");
-    // print(gasOld[1]["today"]);
+    weatherData = await getWeatherData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
     setState(() {});
   }
 
@@ -57,18 +55,20 @@ class _HomeScreenWidget extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+
     // profile = Rom.get();
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
-        title: Text('Calculate Fuel',
+        title: Text('Hello!    ' + user.email! ,
             style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            )),
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Colors.white)),
+
         actions: [
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 8, 5, 8),
@@ -92,27 +92,12 @@ class _HomeScreenWidget extends State<HomeScreen> {
               child: Text("Sign Out"),
             ),
           ),
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
-            child: IconButton(
-              icon: Icon(Icons.refresh),
-              color: Color(0xFF57636C),
-              onPressed: () async {
-                gasData = await getGasData();
-                // if (gasData == null) {
-                //   gasData = await getGasData();
-                // } else {
-                //   gasOld = gasData;
-                //   gasData == await getGasData();
-                // }
-                // print(gasData);
-              },
-            ),
-          ),
+
         ],
         centerTitle: false,
         elevation: 0,
       ),
+
       backgroundColor: kBackgroundColor,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -133,6 +118,15 @@ class _HomeScreenWidget extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16, 15, 16, 8),
+                child: Text('Calculate Fuel App',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: kButtonColor,
+                    )),
+              ),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(16, 15, 16, 8),
                 child: Container(
@@ -154,13 +148,34 @@ class _HomeScreenWidget extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                        child: Text(
-                          'Today Fuel Price (Bangchak)',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
-                        ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(50, 0, 0, 10),
+                            child: Text(
+                              'Today Fuel Price (Bangchak)',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                            child: IconButton(
+                              icon: Icon(Icons.refresh),
+                              color: Color(0xFF57636C),
+                              onPressed: () async {
+                                gasData = await getGasData();
+                                // if (gasData == null) {
+                                //   gasData = await getGasData();
+                                // } else {
+                                //   gasOld = gasData;
+                                //   gasData == await getGasData();
+                                // }
+                                // print(gasData);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       Column(
                         children: [
@@ -222,6 +237,12 @@ class _HomeScreenWidget extends State<HomeScreen> {
     return StreamBuilder(
       stream: _car.snapshots(),
       builder: ((context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+        if( streamSnapshot.connectionState == ConnectionState.waiting){
+          return Center(child: CircularProgressIndicator());
+        } else if( streamSnapshot.hasError){
+          return Center(child: Text('Something went wrong!'));
+        }
+        else
         if(streamSnapshot.hasData) {
           return Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(
