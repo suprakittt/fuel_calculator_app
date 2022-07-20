@@ -1,6 +1,7 @@
 import 'package:driving_app/map/Map_view.dart';
 import 'package:driving_app/third_screen.dart';
 import 'package:driving_app/welcome_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -10,8 +11,8 @@ import 'homepage.dart';
 
 void main() async {
   await GetStorage.init();
-  runApp(const MyApp());
   await Firebase.initializeApp();
+  runApp(const MyApp());
 
 }
 
@@ -26,9 +27,19 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: const HomeScreen(),
-      //home: MapView(index: 1,),
+      // home: MapView(),
       //home: WelcomeWidget(),
-      home: LoginScreen(),
+        //home: LoginScreen(),
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return WelcomeWidget();
+          } else {
+            return LoginScreen();
+          }
+        }
+    )// home: CalculationWidget(index: 10),
     );
 
   }

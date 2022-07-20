@@ -1,6 +1,7 @@
 import 'package:driving_app/constants.dart';
 import 'package:driving_app/function.dart';
 import 'package:driving_app/homepage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:driving_app/map/globals.dart';
 
@@ -19,6 +20,15 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
   getData() async {
     weatherData = await getWeatherData();
     gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
+    gasData = await getGasData();
   }
 
   @override
@@ -29,150 +39,159 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: kWhite,
+        backgroundColor: kBackgroundColor,
         automaticallyImplyLeading: false,
-        title: Text('Welcome',
+        title: Text('Hello!    ' + user.email! ,
             style: TextStyle(
-                fontSize: 26,
+                fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: kExtra3Color)),
+                color: Colors.white)),
         actions: [],
         centerTitle: false,
         elevation: 0,
       ),
-      backgroundColor: kWhite,
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  height: 500,
-                  child: Stack(
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 50),
-                        child: PageView(
-                          // controller: pageViewController ??=
-                          //     PageController(initialPage: 0),
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  12, 12, 12, 12),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.network(
-                                    'https://elasq.com/wp-content/uploads/2021/09/car-18.png',
-                                    width: 300,
-                                    height: 300,
-                                    fit: BoxFit.fitWidth,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16, 8, 16, 0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Text(
-                                          'Driving Calculator',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 22,
-                                              color: kButtonColor),
-                                        ),
-                                      ],
+      backgroundColor: Colors.blueGrey,
+      body: Card(
+        color: Colors.black38,
+        elevation: 20,
+        margin: EdgeInsets.all(20),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+        child: SafeArea(
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    height: 600,
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 50),
+                          child: PageView(
+                            // controller: pageViewController ??=
+                            //     PageController(initialPage: 0),
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    12, 12, 12, 12),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'logo.png',
+                                      width: 300,
+                                      height: 300,
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16, 8, 16, 0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            'This app help you to keep track of your spending, by inputting little information you will  knows your spending of yout fuel for today trip.',
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16, 8, 16, 0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            'Driving Distance Calculator',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
-                                                fontSize: 14,
-                                                color: kButtonColor),
+                                                fontSize: 22,
+                                                color: Colors.black),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16, 8, 16, 0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              'This app help you to keep track of your spending, by inputting little information you will  knows your spending of yout fuel for today trip.',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 17,
+                                                  color: Colors.black54),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(0, 1),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                            // child: SmoothPageIndicator(
+                            child: Container(),
+                          ),
+                        ),
+                        // ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 80),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: Stack(
+                      children: <Widget>[
+                        Positioned.fill(
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: <Color>[
+                                  kExtra3Color,
+                                  kExtra3Color,
                                 ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional(0, 1),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                          // child: SmoothPageIndicator(
-                          child: Container(),
-                        ),
-                      ),
-                      // ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 80),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: Stack(
-                    children: <Widget>[
-                      Positioned.fill(
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: <Color>[
-                                kExtra3Color,
-                                kExtra3Color,
-                              ],
-                            ),
                           ),
                         ),
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.all(16.0),
-                          primary: Colors.white,
-                          textStyle: const TextStyle(fontSize: 20),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.all(16.0),
+                            primary: Colors.blue,
+                            textStyle: const TextStyle(fontSize: 20),
+                          ),
+                          onPressed: () async {
+                            getData();
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomeScreen(),
+                              ),
+                            );
+                          },
+                          // Navigator.pop(context);
+
+                          child: const Text('Go to Homepage',
+                          style: TextStyle(color: Colors.black),),
+
                         ),
-                        onPressed: () async {
-                          getData();
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomeScreen(),
-                            ),
-                          );
-                        },
-                        // Navigator.pop(context);
 
-                        child: const Text('Go to Homepage'),
-
-                      ),
-
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
